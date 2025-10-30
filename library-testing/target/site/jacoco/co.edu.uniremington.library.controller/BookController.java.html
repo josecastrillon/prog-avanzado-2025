@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">library-testing</a> &gt; <a href="index.source.html" class="el_package">co.edu.uniremington.library.controller</a> &gt; <span class="el_source">BookController.java</span></div><h1>BookController.java</h1><pre class="source lang-java linenums">package co.edu.uniremington.library.controller;
+
+import co.edu.uniremington.library.service.BookService;
+import co.edu.uniremington.library.service.dto.BookRequest;
+import co.edu.uniremington.library.service.dto.BookResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * REST Controller for Book operations.
+ */
+@RestController
+@RequestMapping(&quot;/api/books&quot;)
+@Tag(name = &quot;Books&quot;, description = &quot;API para gestión de libros de la biblioteca&quot;)
+public class BookController {
+    private final BookService bookService;
+
+    /**
+     * Constructor with dependency injection.
+     * &lt;p&gt;
+     * NOTE: We inject ONLY the service.
+     * - Service handles everything: business logic AND DTO↔Entity mapping
+     * - Controller is a thin layer that just handles HTTP
+     */
+<span class="fc" id="L33">    public BookController(BookService bookService) {</span>
+<span class="fc" id="L34">        this.bookService = bookService;</span>
+<span class="fc" id="L35">    }</span>
+
+    /**
+     * Gets all books.
+     *
+     * @return List of all books as DTOs
+     */
+    @Operation(
+            summary = &quot;Obtener todos los libros&quot;,
+            description = &quot;Devuelve una lista completa de todos los libros en el sistema, &quot; +
+                    &quot;incluyendo los que no tienen copias disponibles.&quot;
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Lista de libros obtenida exitosamente&quot;)
+    })
+    @GetMapping
+    public ResponseEntity&lt;List&lt;BookResponse&gt;&gt; getAllBooks() {
+        // Service handles everything: entities, mapping, business logic
+<span class="fc" id="L53">        return ResponseEntity.ok(bookService.findAllBooks());</span>
+    }
+
+    /**
+     * Gets all available books (with at least one copy available).
+     *
+     * @return List of available books as DTOs
+     */
+    @Operation(
+            summary = &quot;Obtener libros disponibles&quot;,
+            description = &quot;Devuelve solo los libros que tienen al menos una copia disponible para préstamo.&quot;
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Lista de libros disponibles obtenida exitosamente&quot;)
+    })
+    @GetMapping(&quot;/available&quot;)
+    public ResponseEntity&lt;List&lt;BookResponse&gt;&gt; getAvailableBooks() {
+<span class="fc" id="L70">        return ResponseEntity.ok(bookService.findAvailableBooks());</span>
+    }
+
+    /**
+     * Gets a book by ID.
+     *
+     * @param id Book ID
+     * @return Book details as DTO
+     */
+    @Operation(
+            summary = &quot;Obtener libro por ID&quot;,
+            description = &quot;Busca y devuelve un libro específico por su identificador único.&quot;
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Libro encontrado&quot;),
+            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Libro no encontrado&quot;)
+    })
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;BookResponse&gt; getBookById(
+            @Parameter(description = &quot;ID del libro a buscar&quot;, example = &quot;1&quot;)
+            @PathVariable Long id) {
+<span class="fc" id="L91">        return ResponseEntity.ok(bookService.findById(id));</span>
+    }
+
+    /**
+     * Registers a new book.
+     * &lt;p&gt;
+     * CLEAN ARCHITECTURE: Controller just passes DTO to Service
+     * ===========================================================
+     * The Service handles:
+     * - Converting DTO to Entity (using mapper)
+     * - Applying business rules
+     * - Saving to database
+     * - Converting Entity back to DTO
+     *
+     * @param request Book data from client
+     * @return Registered book as DTO
+     */
+    @Operation(
+            summary = &quot;Registrar nuevo libro&quot;,
+            description = &quot;Crea un nuevo libro en el sistema. Si no se especifican las copias, &quot; +
+                    &quot;se asignan valores por defecto (totalCopies=1, availableCopies=1).&quot;
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Libro registrado exitosamente&quot;),
+            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Datos del libro inválidos&quot;)
+    })
+    @PostMapping
+    public ResponseEntity&lt;BookResponse&gt; registerBook(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = &quot;Datos del nuevo libro&quot;,
+                    required = true
+            )
+            @RequestBody BookRequest request) {
+        // Service handles ALL the complexity - controller just passes the DTO
+<span class="fc" id="L125">        return ResponseEntity.status(HttpStatus.CREATED).body(bookService.registerNewBook(request));</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

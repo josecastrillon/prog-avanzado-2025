@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">library-testing</a> &gt; <a href="index.source.html" class="el_package">co.edu.uniremington.library.service</a> &gt; <span class="el_source">BookService.java</span></div><h1>BookService.java</h1><pre class="source lang-java linenums">package co.edu.uniremington.library.service;
+
+import co.edu.uniremington.library.domain.exception.BookNotFoundException;
+import co.edu.uniremington.library.domain.model.Book;
+import co.edu.uniremington.library.repository.BookRepository;
+import co.edu.uniremington.library.service.dto.BookRequest;
+import co.edu.uniremington.library.service.dto.BookResponse;
+import co.edu.uniremington.library.service.mapper.BookMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Service for Book-related operations.
+ */
+@Service
+@Transactional
+public class BookService {
+    private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
+
+<span class="fc" id="L23">    public BookService(BookRepository bookRepository, BookMapper bookMapper) {</span>
+<span class="fc" id="L24">        this.bookRepository = bookRepository;</span>
+<span class="fc" id="L25">        this.bookMapper = bookMapper;</span>
+<span class="fc" id="L26">    }</span>
+
+    /**
+     * Finds a book by ID and returns it as DTO.
+     *
+     * @param bookId ID of the book
+     * @return BookResponse DTO
+     * @throws BookNotFoundException if book doesn't exist
+     */
+    public BookResponse findById(Long bookId) {
+<span class="fc" id="L36">        Book book = findEntityById(bookId);</span>
+<span class="fc" id="L37">        return bookMapper.toResponse(book);</span>
+    }
+
+    /**
+     * Gets all available books (with at least one copy available) as DTOs.
+     *
+     * @return List of BookResponse DTOs
+     */
+    public List&lt;BookResponse&gt; findAvailableBooks() {
+<span class="fc" id="L46">        List&lt;Book&gt; books = bookRepository.findByAvailableCopiesGreaterThan(0);</span>
+<span class="fc" id="L47">        return bookMapper.toResponseList(books);</span>
+    }
+
+    /**
+     * Gets all books (regardless of availability) as DTOs.
+     *
+     * @return List of BookResponse DTOs
+     */
+    public List&lt;BookResponse&gt; findAllBooks() {
+<span class="fc" id="L56">        List&lt;Book&gt; books = bookRepository.findAll();</span>
+<span class="fc" id="L57">        return bookMapper.toResponseList(books);</span>
+    }
+
+    /**
+     * Registers a new book in the system.
+     *
+     * @param request BookRequest DTO from controller
+     * @return BookResponse DTO with saved data (including generated ID)
+     */
+    public BookResponse registerNewBook(BookRequest request) {
+        // Convert DTO to Entity
+<span class="fc" id="L68">        Book book = bookMapper.toEntity(request);</span>
+
+        // Apply default values for copies (business logic)
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (book.getTotalCopies() == null) {</span>
+<span class="fc" id="L72">            book.setTotalCopies(1);</span>
+        }
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (book.getAvailableCopies() == null) {</span>
+<span class="fc" id="L75">            book.setAvailableCopies(book.getTotalCopies());</span>
+        }
+
+        // Save and return as DTO
+<span class="fc" id="L79">        Book savedBook = bookRepository.save(book);</span>
+<span class="fc" id="L80">        return bookMapper.toResponse(savedBook);</span>
+    }
+
+    /**
+     * Finds a book entity by ID.
+     *
+     * @param bookId ID of the book
+     * @return Book entity
+     * @throws BookNotFoundException if book doesn't exist
+     */
+    Book findEntityById(Long bookId) {
+<span class="fc" id="L91">        return bookRepository.findById(bookId)</span>
+<span class="fc" id="L92">                .orElseThrow(() -&gt; new BookNotFoundException(&quot;Book not found with ID: &quot; + bookId));</span>
+    }
+
+    /**
+     * Decrements the available copies of a book (when loaning).
+     *
+     * @param book Book to update
+     */
+    void decrementAvailableCopies(Book book) {
+<span class="fc" id="L101">        book.setAvailableCopies(book.getAvailableCopies() - 1);</span>
+<span class="fc" id="L102">        bookRepository.save(book);</span>
+<span class="fc" id="L103">    }</span>
+
+    /**
+     * Increments the available copies of a book (when returning).
+     *
+     * @param book Book to update
+     */
+    void incrementAvailableCopies(Book book) {
+<span class="fc" id="L111">        book.setAvailableCopies(book.getAvailableCopies() + 1);</span>
+<span class="fc" id="L112">        bookRepository.save(book);</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Checks if a book has available copies.
+     *
+     * @param book Book to check
+     * @return true if book has at least one available copy
+     */
+    public boolean hasAvailableCopies(Book book) {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        return book.getAvailableCopies() &gt; 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
