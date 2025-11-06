@@ -49,7 +49,7 @@ public class UserMapper {
 
         UserResponse response = new UserResponse();
         response.setId(user.getId());
-        response.setName(user.getName());
+        response.setName(user.getName()+"Prueba");
         response.setEmail(user.getEmail());
         response.setHasFines(user.getHasFines());
 

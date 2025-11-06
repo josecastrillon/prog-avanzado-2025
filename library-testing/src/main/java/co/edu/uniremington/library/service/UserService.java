@@ -25,6 +25,7 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+
     /**
      * Finds a user by ID and returns it as DTO.
      *
@@ -88,6 +89,7 @@ public class UserService {
     public boolean hasFines(User user) {
         return user.getHasFines() != null && user.getHasFines();
     }
+
 
     /**
      * Marks a user as having fines.
