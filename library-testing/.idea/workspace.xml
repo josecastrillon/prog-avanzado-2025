@@ -4,11 +4,145 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="099335e9-1b7a-47d8-88ac-a51d0f5a24fb" name="Changes" comment="" />
+    <list default="true" id="099335e9-1b7a-47d8-88ac-a51d0f5a24fb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/jacoco.exec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/library-testing-1.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/library-testing-1.0.0.jar.original" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.config/GlobalExceptionHandler.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.config/GlobalExceptionHandler.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.config/OpenApiConfig.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.config/OpenApiConfig.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.config/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.config/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/BookController.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/BookController.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/LoanController.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/LoanController.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/UserController.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/UserController.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.controller/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/BookNotFoundException.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/BookNotFoundException.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/LoanAlreadyReturnedException.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/LoanAlreadyReturnedException.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/LoanNotFoundException.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/LoanNotFoundException.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/NoAvailableCopiesException.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/NoAvailableCopiesException.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/UserNotFoundException.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/UserNotFoundException.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/UserWithFinesException.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/UserWithFinesException.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.exception/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/Book.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/Book.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/Loan.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/Loan.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/User.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/User.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.domain.model/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/BookRequest.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/BookRequest.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/BookResponse.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/BookResponse.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/LoanRequest.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/LoanRequest.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/LoanResponse.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/LoanResponse.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/LoanUpdateRequest.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/LoanUpdateRequest.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/UserRequest.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/UserRequest.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/UserResponse.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/UserResponse.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.dto/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/BookMapper.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/BookMapper.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/LoanMapper.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/LoanMapper.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/UserMapper.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/UserMapper.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service.mapper/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/BookService.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/BookService.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/LoanService.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/LoanService.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/UserService.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/UserService.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library.service/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library/LibraryApplication.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library/LibraryApplication.java.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/co.edu.uniremington.library/index.source.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/branchfc.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/branchnc.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/branchpc.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/bundle.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/class.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/down.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/greenbar.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/group.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/method.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/package.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/prettify.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/prettify.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/redbar.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/report.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/report.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/session.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/sort.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/sort.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/source.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-resources/up.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-co.edu.uniremington.library.config.GlobalExceptionHandlerTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-co.edu.uniremington.library.controller.BookControllerTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-co.edu.uniremington.library.service.BookServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-co.edu.uniremington.library.service.UserServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-co.edu.uniremington.library.service.mapper.LoanMapperTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/co.edu.uniremington.library.config.GlobalExceptionHandlerTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/co.edu.uniremington.library.controller.BookControllerTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/co.edu.uniremington.library.service.BookServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/co.edu.uniremington.library.service.UserServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/co.edu.uniremington.library.service.mapper.LoanMapperTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/Application.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/controller/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/exception/InvalidPriceException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/exception/ProductNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/main/java/co/edu/uniremington/products/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/test/java/co/edu/uniremington/products/controller/ProductControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../products-unit-testing/src/test/java/co/edu/uniremington/products/service/ProductServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/co/edu/uniremington/library/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/co/edu/uniremington/library/service/UserServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/co/edu/uniremington/library/service/UserServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/co/edu/uniremington/library/service/UserServiceTest.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -24,6 +158,7 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -49,8 +184,8 @@
     "Spring Boot.LibraryApplication.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "feature/unit__test",
     "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -61,6 +196,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "configurable.group.tools",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -104,11 +240,12 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-84258761d1cc-intellij.indexing.shared.core-IU-243.28141.18" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.28141.18" />
       </set>
     </attachedChunks>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="099335e9-1b7a-47d8-88ac-a51d0f5a24fb" name="Changes" comment="" />
@@ -119,6 +256,7 @@
       <workItem from="1761261344068" duration="7197000" />
       <workItem from="1761600896212" duration="11189000" />
       <workItem from="1761859467107" duration="3047000" />
+      <workItem from="1762476332541" duration="525000" />
     </task>
     <servers />
   </component>
