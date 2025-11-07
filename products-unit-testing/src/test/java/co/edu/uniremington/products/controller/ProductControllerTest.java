@@ -1,30 +1,80 @@
 package co.edu.uniremington.products.controller;
 
-import org.junit.jupiter.api.Test;
 
-/**
- * UNIT TESTING EXAM
- *
- * Instructions:
- * 1. Implement unit tests for ProductController
- * 2. Use Mockito to mock the ProductService
- * 3. Cover the following scenarios:
- *    - POST /api/products: successful creation
- *    - GET /api/products/{id}: get existing product
- *    - GET /api/products: list all products
- *    - PATCH /api/products/{id}/price: update price
- *
- * Evaluation criteria:
- * - Correct use of mocks
- * - Verification of HTTP status codes
- * - Verification of responses
- */
+import co.edu.uniremington.products.model.Product;
+import co.edu.uniremington.products.service.ProductService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class ProductControllerTest {
 
-    // TODO: Implement your tests here
+    @Mock
+    private ProductService productService;
+
+    @InjectMocks
+    private ProductController productController;
 
     @Test
-    void shouldCreateProductAndReturnStatus201() {
-        // TODO: Implement
+    void shouldCreateProductSuccessfully() {
+        Product product = new Product(null, "Laptop", "HP", new BigDecimal("1200"), 10);
+        when(productService.createProduct(product)).thenReturn(product);
+
+        ResponseEntity<Product> response = productController.createProduct(product);
+
+        assertEquals(201, response.getStatusCode().value());
+        assertEquals(product, response.getBody());
+        verify(productService).createProduct(product);
+    }
+
+    @Test
+    void shouldReturnProductById() {
+        Product product = new Product(1L, "Mouse", "Wireless", new BigDecimal("50"), 20);
+        when(productService.findById(1L)).thenReturn(product);
+
+        ResponseEntity<Product> response = productController.getProduct(1L);
+
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(product, response.getBody());
+        verify(productService).findById(1L);
+    }
+
+    @Test
+    void shouldListAllProducts() {
+        List<Product> products = List.of(
+                new Product(1L, "Keyboard", "RGB", new BigDecimal("150000"), 5),
+                new Product(2L, "Monitor", "27 inch", new BigDecimal("800000"), 3)
+        );
+
+        when(productService.findAll()).thenReturn(products);
+
+        ResponseEntity<List<Product>> response = productController.listProducts();
+
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(products, response.getBody());
+        verify(productService).findAll();
+    }
+
+    @Test
+    void shouldUpdatePriceSuccessfully() {
+        Product updatedProduct = new Product(1L, "Keyboard", "RGB", new BigDecimal("180000"), 5);
+        when(productService.updatePrice(1L, new BigDecimal("180000")))
+                .thenReturn(updatedProduct);
+
+        ResponseEntity<Product> response = productController.updatePrice(1L, new BigDecimal("180000"));
+
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(updatedProduct, response.getBody());
+        verify(productService).updatePrice(1L, new BigDecimal("180000"));
     }
 }
