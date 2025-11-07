@@ -52,6 +52,7 @@
     "git-widget-placeholder": "feature/unit__test",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Mafe/Lenguaje_de_programacion_avanzado_II/Proyecto/prog-avanzado-2025/library-testing",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -72,7 +73,7 @@
       <recent name="co.edu.uniremington.library.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.LibraryApplication">
+  <component name="RunManager" selected="JUnit.BookServiceTest">
     <configuration name="BookServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="library-testing" />
       <extension name="coverage">

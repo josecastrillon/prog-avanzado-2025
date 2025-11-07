@@ -28,8 +28,12 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         Product product = productService.findById(id);
-        return ResponseEntity.ok(product);
+        if (product == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // 🔹 Retorna 404 si no existe
+        }
+        return ResponseEntity.ok(product); // 🔹 Retorna 200 si se encontró
     }
+
 
     @GetMapping
     public ResponseEntity<List<Product>> listProducts() {
