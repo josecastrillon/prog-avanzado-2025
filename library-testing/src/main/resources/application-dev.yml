@@ -1,0 +1,42 @@
+# Configuración para desarrollo - Base de datos H2 persistente
+spring:
+  datasource:
+    # H2 en archivo (persiste los datos)
+    url: jdbc:h2:file:./data/librarydb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # create: Crea las tablas al iniciar (no las borra al cerrar)
+      # update: Actualiza las tablas sin borrar datos
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      # Fuerza la ejecución de data.sql después de crear las tablas
+      mode: always
+
+  h2:
+    console:
+      enabled: true
+      # Puedes acceder en: http://localhost:8080/h2-console
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+server:
+  port: 8080
+
+logging:
+  level:
+    co.edu.uniremington.library: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
