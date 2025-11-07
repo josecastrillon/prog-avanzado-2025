@@ -17,4 +17,6 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     // New methods for separated services
     List<Loan> findByActive(Boolean active);
     List<Loan> findByUser(User user);
+    List<Loan> findByActiveTrue();
+    List<Loan> findByUserId(Long userId);
 }

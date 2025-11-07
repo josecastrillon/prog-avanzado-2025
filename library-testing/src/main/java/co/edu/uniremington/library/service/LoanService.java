@@ -157,9 +157,11 @@ public class LoanService {
      * @return Loan entity
      * @throws LoanNotFoundException if loan doesn't exist
      */
-    public Loan findById(Long loanId) {
-        return loanRepository.findById(loanId)
-                .orElseThrow(() -> new LoanNotFoundException("Loan not found with ID: " + loanId));
+    //Me ayuda a buscar un prestamos por Id
+    public LoanResponse findById(Long loanId) {
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new LoanNotFoundException("Loan not found with id " + loanId));
+        return loanMapper.toResponse(loan);
     }
 
     /**
@@ -197,8 +199,28 @@ public class LoanService {
      * @return List of all loans as DTOs
      */
     public List<LoanResponse> findAllLoans() {
-        return loanRepository.findAll().stream()
+        return loanRepository.findAll()
+                .stream()
                 .map(loanMapper::toResponse)
                 .toList();
+    }
+
+    public LoanResponse updatedLoan(long id, Loan updatedLoan) {
+        // Buscar el préstamo existente
+        Loan existingLoan = loanRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Loan not found with ID: " + id));
+
+        // Actualizar los campos necesarios
+        existingLoan.setActive(updatedLoan.getActive());
+        existingLoan.setReturnDate(updatedLoan.getReturnDate());
+        existingLoan.setLoanDate(updatedLoan.getLoanDate());
+        existingLoan.setBook(updatedLoan.getBook());
+        existingLoan.setUser(updatedLoan.getUser());
+
+        // Guardar el préstamo actualizado
+        Loan savedLoan = loanRepository.save(existingLoan);
+
+        // Convertir a DTO y devolver
+        return loanMapper.toResponse(savedLoan);
     }
 }

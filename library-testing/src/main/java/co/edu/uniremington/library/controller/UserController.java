@@ -95,6 +95,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerNewUser(request));
     }
 
+
+
     /**
      * Adds fines to a user.
      *

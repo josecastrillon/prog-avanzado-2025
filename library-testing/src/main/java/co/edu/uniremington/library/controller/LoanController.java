@@ -98,4 +98,16 @@ public class LoanController {
         List<LoanResponse> loans = loanService.findLoansByUser(userId);
         return ResponseEntity.ok(loans);
     }
+    //Toco Agragar para poder encontrar los prestamos por ID
+    /**
+     * Gets a specific loan by its ID.
+     *
+     * @param id Loan ID
+     * @return LoanResponse DTO with loan details
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<LoanResponse> getLoanById(@PathVariable Long id) {
+        LoanResponse loan = loanService.findById(id);
+        return ResponseEntity.ok(loan);
+    }
 }
