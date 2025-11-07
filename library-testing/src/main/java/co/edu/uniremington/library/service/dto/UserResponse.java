@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * DTO for User responses.
  */
 @Schema(description = "Información de un usuario")
-public class UserResponse {
+public class    UserResponse {
 
     @Schema(description = "ID único del usuario", example = "1")
     private Long id;
