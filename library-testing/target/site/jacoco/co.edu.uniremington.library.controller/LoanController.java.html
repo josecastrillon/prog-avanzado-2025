@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoanController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">library-testing</a> &gt; <a href="index.source.html" class="el_package">co.edu.uniremington.library.controller</a> &gt; <span class="el_source">LoanController.java</span></div><h1>LoanController.java</h1><pre class="source lang-java linenums">package co.edu.uniremington.library.controller;
+
+import co.edu.uniremington.library.service.LoanService;
+import co.edu.uniremington.library.service.dto.LoanRequest;
+import co.edu.uniremington.library.service.dto.LoanResponse;
+import co.edu.uniremington.library.service.dto.LoanUpdateRequest;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * REST Controller for Loan operations.
+ */
+@RestController
+@RequestMapping(&quot;/api/loans&quot;)
+public class LoanController {
+    private final LoanService loanService;
+
+<span class="nc" id="L22">    public LoanController(LoanService loanService) {</span>
+<span class="nc" id="L23">        this.loanService = loanService;</span>
+<span class="nc" id="L24">    }</span>
+
+    /**
+     * Creates a new book loan.
+     *
+     * @param request LoanRequest DTO with validated bookId and userId
+     * @return ResponseEntity with LoanResponse DTO
+     */
+    @PostMapping
+    public ResponseEntity&lt;LoanResponse&gt; createLoan(@Valid @RequestBody LoanRequest request) {
+        // Service returns DTO directly - controller just passes it through
+<span class="nc" id="L35">        LoanResponse response = loanService.createLoan(request.getBookId(), request.getUserId());</span>
+<span class="nc" id="L36">        return ResponseEntity.status(HttpStatus.CREATED).body(response);</span>
+    }
+
+    /**
+     * Processes a book return.
+     *
+     * @param id Loan ID to return
+     * @return ResponseEntity with updated LoanResponse DTO
+     */
+    @PostMapping(&quot;/{id}/return&quot;)
+    public ResponseEntity&lt;LoanResponse&gt; returnBook(@PathVariable Long id) {
+        // Service returns DTO directly - no mapping needed here
+<span class="nc" id="L48">        LoanResponse response = loanService.returnBook(id);</span>
+<span class="nc" id="L49">        return ResponseEntity.ok(response);</span>
+    }
+
+    /**
+     * Updates a loan using PATCH semantics (partial update).
+     *
+     * @param id      Loan ID to update
+     * @param request Fields to update
+     * @return ResponseEntity with updated LoanResponse DTO
+     */
+    @PatchMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;LoanResponse&gt; updateLoan(
+            @PathVariable Long id,
+            @RequestBody LoanUpdateRequest request) {
+
+<span class="nc" id="L64">        LoanResponse response = loanService.updateLoan(id, request);</span>
+<span class="nc" id="L65">        return ResponseEntity.ok(response);</span>
+    }
+
+    /**
+     * Gets all loans.
+     *
+     * @return List of all loans as DTOs
+     */
+    @GetMapping
+    public ResponseEntity&lt;List&lt;LoanResponse&gt;&gt; getAllLoans() {
+<span class="nc" id="L75">        List&lt;LoanResponse&gt; loans = loanService.findAllLoans();</span>
+<span class="nc" id="L76">        return ResponseEntity.ok(loans);</span>
+    }
+
+    /**
+     * Gets all active loans.
+     *
+     * @return List of active loans as DTOs
+     */
+    @GetMapping(&quot;/active&quot;)
+    public ResponseEntity&lt;List&lt;LoanResponse&gt;&gt; getActiveLoans() {
+<span class="nc" id="L86">        List&lt;LoanResponse&gt; loans = loanService.findActiveLoans();</span>
+<span class="nc" id="L87">        return ResponseEntity.ok(loans);</span>
+    }
+
+    /**
+     * Gets all loans for a specific user.
+     *
+     * @param userId User ID
+     * @return List of user's loans as DTOs
+     */
+    @GetMapping(&quot;/user/{userId}&quot;)
+    public ResponseEntity&lt;List&lt;LoanResponse&gt;&gt; getLoansByUser(@PathVariable Long userId) {
+<span class="nc" id="L98">        List&lt;LoanResponse&gt; loans = loanService.findLoansByUser(userId);</span>
+<span class="nc" id="L99">        return ResponseEntity.ok(loans);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

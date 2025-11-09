@@ -1,0 +1,8 @@
+co\edu\uniremington\products\Application.class
+co\edu\uniremington\products\exception\ProductNotFoundException.class
+co\edu\uniremington\products\model\Product.class
+co\edu\uniremington\products\repository\ProductRepository.class
+co\edu\uniremington\products\service\ProductService.class
+co\edu\uniremington\products\controller\ProductController.class
+co\edu\uniremington\products\service\impl\ProductServiceImpl.class
+co\edu\uniremington\products\exception\InvalidPriceException.class

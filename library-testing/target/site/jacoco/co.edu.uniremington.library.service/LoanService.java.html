@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoanService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">library-testing</a> &gt; <a href="index.source.html" class="el_package">co.edu.uniremington.library.service</a> &gt; <span class="el_source">LoanService.java</span></div><h1>LoanService.java</h1><pre class="source lang-java linenums">package co.edu.uniremington.library.service;
+
+import co.edu.uniremington.library.domain.exception.LoanAlreadyReturnedException;
+import co.edu.uniremington.library.domain.exception.LoanNotFoundException;
+import co.edu.uniremington.library.domain.exception.NoAvailableCopiesException;
+import co.edu.uniremington.library.domain.exception.UserWithFinesException;
+import co.edu.uniremington.library.domain.model.Book;
+import co.edu.uniremington.library.domain.model.Loan;
+import co.edu.uniremington.library.domain.model.User;
+import co.edu.uniremington.library.repository.LoanRepository;
+import co.edu.uniremington.library.service.dto.LoanResponse;
+import co.edu.uniremington.library.service.dto.LoanUpdateRequest;
+import co.edu.uniremington.library.service.mapper.LoanMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+
+/**
+ * Service for Loan-related operations.
+ */
+@Service
+@Transactional
+public class LoanService {
+    private final LoanRepository loanRepository;
+    private final BookService bookService;
+    private final UserService userService;
+    private final LoanMapper loanMapper;
+
+    public LoanService(LoanRepository loanRepository,
+                       BookService bookService,
+                       UserService userService,
+<span class="nc" id="L34">                       LoanMapper loanMapper) {</span>
+<span class="nc" id="L35">        this.loanRepository = loanRepository;</span>
+<span class="nc" id="L36">        this.bookService = bookService;</span>
+<span class="nc" id="L37">        this.userService = userService;</span>
+<span class="nc" id="L38">        this.loanMapper = loanMapper;</span>
+<span class="nc" id="L39">    }</span>
+
+    /**
+     * Creates a new book loan for a user.
+     *
+     * @param bookId ID of the book to loan
+     * @param userId ID of the user requesting the loan
+     * @return LoanResponse DTO with loan details
+     * @throws co.edu.uniremington.library.domain.exception.UserNotFoundException if user doesn't exist
+     * @throws UserWithFinesException                                             if user has pending fines
+     * @throws co.edu.uniremington.library.domain.exception.BookNotFoundException if book doesn't exist
+     * @throws NoAvailableCopiesException                                         if no copies available
+     */
+    public LoanResponse createLoan(Long bookId, Long userId) {
+        // 1. Validate user exists (delegates to UserService)
+        // Using findEntityById() - package-private method for internal service-to-service communication
+<span class="nc" id="L55">        User user = userService.findEntityById(userId);</span>
+
+        // 2. Validate user doesn't have fines (delegates to UserService)
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (userService.hasFines(user)) {</span>
+<span class="nc" id="L59">            throw new UserWithFinesException(&quot;User has pending fines&quot;);</span>
+        }
+
+        // 3. Validate book exists (delegates to BookService)
+        // Using findEntityById() - package-private method for internal service-to-service communication
+<span class="nc" id="L64">        Book book = bookService.findEntityById(bookId);</span>
+
+        // 4. Validate book has available copies (delegates to BookService)
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (!bookService.hasAvailableCopies(book)) {</span>
+<span class="nc" id="L68">            throw new NoAvailableCopiesException(&quot;No available copies of the book: &quot; + book.getTitle());</span>
+        }
+
+        // 5. Create the loan
+<span class="nc" id="L72">        Loan loan = new Loan();</span>
+<span class="nc" id="L73">        loan.setBook(book);</span>
+<span class="nc" id="L74">        loan.setUser(user);</span>
+<span class="nc" id="L75">        loan.setLoanDate(LocalDate.now());</span>
+<span class="nc" id="L76">        loan.setReturnDate(LocalDate.now().plusDays(14));  // 2 weeks loan period</span>
+<span class="nc" id="L77">        loan.setActive(true);</span>
+
+        // 6. Update available copies (delegates to BookService)
+<span class="nc" id="L80">        bookService.decrementAvailableCopies(book);</span>
+
+        // 7. Save loan and convert to DTO
+<span class="nc" id="L83">        Loan savedLoan = loanRepository.save(loan);</span>
+
+        // MAPPING: Entity → DTO
+<span class="nc" id="L86">        return loanMapper.toResponse(savedLoan);</span>
+    }
+
+    /**
+     * Processes the return of a loaned book.
+     *
+     * @param loanId ID of the loan to return
+     * @return LoanResponse DTO with updated loan details
+     * @throws LoanNotFoundException        if loan doesn't exist
+     * @throws LoanAlreadyReturnedException if loan is already returned
+     */
+    public LoanResponse returnBook(Long loanId) {
+        // 1. Validate loan exists
+<span class="nc" id="L99">        Loan loan = loanRepository.findById(loanId)</span>
+<span class="nc" id="L100">                .orElseThrow(() -&gt; new LoanNotFoundException(&quot;Loan not found with ID: &quot; + loanId));</span>
+
+        // 2. Validate loan is active (IDEMPOTENCY CHECK)
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (!loan.getActive()) {</span>
+<span class="nc" id="L104">            throw new LoanAlreadyReturnedException(&quot;Loan with ID &quot; + loanId + &quot; has already been returned&quot;);</span>
+        }
+
+        // 3. Mark loan as inactive
+<span class="nc" id="L108">        loan.setActive(false);</span>
+
+        // 4. Increment available copies (delegates to BookService)
+<span class="nc" id="L111">        Book book = loan.getBook();</span>
+<span class="nc" id="L112">        bookService.incrementAvailableCopies(book);</span>
+
+        // 5. Save updated loan and convert to DTO
+<span class="nc" id="L115">        Loan updatedLoan = loanRepository.save(loan);</span>
+
+        // MAPPING: Entity → DTO
+<span class="nc" id="L118">        return loanMapper.toResponse(updatedLoan);</span>
+    }
+
+    /**
+     * Updates a loan using PATCH semantics (partial update).
+     *
+     * @param loanId  ID of the loan to update
+     * @param request Fields to update
+     * @return Updated loan as DTO
+     * @throws LoanNotFoundException if loan doesn't exist
+     */
+    public LoanResponse updateLoan(Long loanId, LoanUpdateRequest request) {
+        // Find the loan
+<span class="nc" id="L131">        Loan loan = loanRepository.findById(loanId)</span>
+<span class="nc" id="L132">                .orElseThrow(() -&gt; new LoanNotFoundException(&quot;Loan not found with ID: &quot; + loanId));</span>
+
+        // Update only the fields that are provided
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if (request.getActive() != null) {</span>
+<span class="nc" id="L136">            loan.setActive(request.getActive());</span>
+        }
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (request.getReturnDate() != null) {</span>
+            // In a real app, parse and validate the date
+            // For simplicity, we're showing the concept
+            // loan.setReturnDate(LocalDate.parse(request.getReturnDate()));
+        }
+
+        // IMPORTANT: We're NOT updating book inventory here
+        // This is just a field update, not the business operation &quot;return book&quot;
+        // For proper return logic, use returnBook() method
+
+<span class="nc" id="L149">        Loan updated = loanRepository.save(loan);</span>
+<span class="nc" id="L150">        return loanMapper.toResponse(updated);</span>
+    }
+
+    /**
+     * Finds a loan by ID.
+     *
+     * @param loanId ID of the loan
+     * @return Loan entity
+     * @throws LoanNotFoundException if loan doesn't exist
+     */
+    public Loan findById(Long loanId) {
+<span class="nc" id="L161">        return loanRepository.findById(loanId)</span>
+<span class="nc" id="L162">                .orElseThrow(() -&gt; new LoanNotFoundException(&quot;Loan not found with ID: &quot; + loanId));</span>
+    }
+
+    /**
+     * Gets all active loans.
+     *
+     * @return List of active loans as DTOs
+     */
+    public List&lt;LoanResponse&gt; findActiveLoans() {
+<span class="nc" id="L171">        List&lt;Loan&gt; activeLoans = loanRepository.findByActive(true);</span>
+<span class="nc" id="L172">        return activeLoans.stream()</span>
+<span class="nc" id="L173">                .map(loanMapper::toResponse)</span>
+<span class="nc" id="L174">                .toList();</span>
+    }
+
+    /**
+     * Gets all loans for a specific user.
+     *
+     * @param userId ID of the user
+     * @return List of user's loans as DTOs
+     */
+    public List&lt;LoanResponse&gt; findLoansByUser(Long userId) {
+        // Validate user exists (delegates to UserService)
+        // Using findEntityById() - package-private method for internal service-to-service communication
+<span class="nc" id="L186">        User user = userService.findEntityById(userId);</span>
+
+<span class="nc" id="L188">        List&lt;Loan&gt; userLoans = loanRepository.findByUser(user);</span>
+<span class="nc" id="L189">        return userLoans.stream()</span>
+<span class="nc" id="L190">                .map(loanMapper::toResponse)</span>
+<span class="nc" id="L191">                .toList();</span>
+    }
+
+    /**
+     * Gets all loans.
+     *
+     * @return List of all loans as DTOs
+     */
+    public List&lt;LoanResponse&gt; findAllLoans() {
+<span class="nc" id="L200">        return loanRepository.findAll().stream()</span>
+<span class="nc" id="L201">                .map(loanMapper::toResponse)</span>
+<span class="nc" id="L202">                .toList();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

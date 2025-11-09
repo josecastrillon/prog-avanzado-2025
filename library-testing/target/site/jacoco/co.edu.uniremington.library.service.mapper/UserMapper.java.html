@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">library-testing</a> &gt; <a href="index.source.html" class="el_package">co.edu.uniremington.library.service.mapper</a> &gt; <span class="el_source">UserMapper.java</span></div><h1>UserMapper.java</h1><pre class="source lang-java linenums">package co.edu.uniremington.library.service.mapper;
+
+import co.edu.uniremington.library.domain.model.User;
+import co.edu.uniremington.library.service.dto.UserRequest;
+import co.edu.uniremington.library.service.dto.UserResponse;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Mapper for User entity and DTOs.
+ */
+@Component
+<span class="nc" id="L15">public class UserMapper {</span>
+
+    /**
+     * Converts UserRequest DTO to User entity.
+     * &lt;p&gt;
+     * NOTE: hasFines is NOT set from the request.
+     * It will be initialized to false by UserService.registerNewUser()
+     *
+     * @param request DTO from client
+     * @return User entity
+     */
+    public User toEntity(UserRequest request) {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (request == null) {</span>
+<span class="nc" id="L28">            return null;</span>
+        }
+
+<span class="nc" id="L31">        User user = new User();</span>
+<span class="nc" id="L32">        user.setName(request.getName());</span>
+<span class="nc" id="L33">        user.setEmail(request.getEmail());</span>
+        // hasFines intentionally NOT set here - managed separately
+
+<span class="nc" id="L36">        return user;</span>
+    }
+
+    /**
+     * Converts User entity to UserResponse DTO.
+     *
+     * @param user Entity from database
+     * @return DTO for client
+     */
+    public UserResponse toResponse(User user) {
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (user == null) {</span>
+<span class="nc" id="L47">            return null;</span>
+        }
+
+<span class="nc" id="L50">        UserResponse response = new UserResponse();</span>
+<span class="nc" id="L51">        response.setId(user.getId());</span>
+<span class="nc" id="L52">        response.setName(user.getName());</span>
+<span class="nc" id="L53">        response.setEmail(user.getEmail());</span>
+<span class="nc" id="L54">        response.setHasFines(user.getHasFines());</span>
+
+<span class="nc" id="L56">        return response;</span>
+    }
+
+    /**
+     * Converts a list of User entities to UserResponse DTOs.
+     *
+     * @param users List of entities
+     * @return List of DTOs
+     */
+    public List&lt;UserResponse&gt; toResponseList(List&lt;User&gt; users) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (users == null) {</span>
+<span class="nc" id="L67">            return null;</span>
+        }
+
+<span class="nc" id="L70">        return users.stream()</span>
+<span class="nc" id="L71">                .map(this::toResponse)</span>
+<span class="nc" id="L72">                .collect(Collectors.toList());</span>
+    }
+
+    /**
+     * Updates an existing User entity with data from UserRequest.
+     * &lt;p&gt;
+     * NOTE: We DON'T update:
+     * - ID (immutable)
+     * - hasFines (managed through specific endpoints)
+     *
+     * @param user    Existing entity
+     * @param request Updated data
+     */
+    public void updateEntityFromRequest(User user, UserRequest request) {
+<span class="nc bnc" id="L86" title="All 4 branches missed.">        if (user == null || request == null) {</span>
+<span class="nc" id="L87">            return;</span>
+        }
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (request.getName() != null) {</span>
+<span class="nc" id="L91">            user.setName(request.getName());</span>
+        }
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (request.getEmail() != null) {</span>
+<span class="nc" id="L94">            user.setEmail(request.getEmail());</span>
+        }
+
+        // hasFines is NEVER updated from UserRequest
+        // Use dedicated endpoints: POST/DELETE /api/users/{id}/fines
+<span class="nc" id="L99">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

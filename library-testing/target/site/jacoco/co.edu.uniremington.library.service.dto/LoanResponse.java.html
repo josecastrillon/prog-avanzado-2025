@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoanResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">library-testing</a> &gt; <a href="index.source.html" class="el_package">co.edu.uniremington.library.service.dto</a> &gt; <span class="el_source">LoanResponse.java</span></div><h1>LoanResponse.java</h1><pre class="source lang-java linenums">package co.edu.uniremington.library.service.dto;
+
+import java.time.LocalDate;
+
+/**
+ * Data Transfer Object (DTO) for Loan responses.
+ */
+public class LoanResponse {
+    private Long id;
+    private String bookTitle;
+    private String userName;
+    private LocalDate loanDate;
+    private LocalDate returnDate;
+    private Boolean active;
+
+    /**
+     * Default constructor required by JSON serialization frameworks (Jackson).
+     * This allows Spring to automatically convert this object to JSON responses.
+     */
+<span class="fc" id="L20">    public LoanResponse() {</span>
+<span class="fc" id="L21">    }</span>
+
+    // Getters and Setters
+    public Long getId() {
+<span class="fc" id="L25">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L29">        this.id = id;</span>
+<span class="fc" id="L30">    }</span>
+
+    public String getBookTitle() {
+<span class="fc" id="L33">        return bookTitle;</span>
+    }
+
+    public void setBookTitle(String bookTitle) {
+<span class="fc" id="L37">        this.bookTitle = bookTitle;</span>
+<span class="fc" id="L38">    }</span>
+
+    public String getUserName() {
+<span class="fc" id="L41">        return userName;</span>
+    }
+
+    public void setUserName(String userName) {
+<span class="fc" id="L45">        this.userName = userName;</span>
+<span class="fc" id="L46">    }</span>
+
+    public LocalDate getLoanDate() {
+<span class="fc" id="L49">        return loanDate;</span>
+    }
+
+    public void setLoanDate(LocalDate loanDate) {
+<span class="fc" id="L53">        this.loanDate = loanDate;</span>
+<span class="fc" id="L54">    }</span>
+
+    public LocalDate getReturnDate() {
+<span class="fc" id="L57">        return returnDate;</span>
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+<span class="fc" id="L61">        this.returnDate = returnDate;</span>
+<span class="fc" id="L62">    }</span>
+
+    public Boolean getActive() {
+<span class="fc" id="L65">        return active;</span>
+    }
+
+    public void setActive(Boolean active) {
+<span class="fc" id="L69">        this.active = active;</span>
+<span class="fc" id="L70">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
