@@ -1,8 +1,9 @@
 package co.edu.uniremington.products.controller;
 
-
 import co.edu.uniremington.products.model.Product;
 import co.edu.uniremington.products.service.ProductService;
+import co.edu.uniremington.products.controller.ProductController; // Import importante
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,8 +27,9 @@ class ProductControllerTest {
     private ProductController productController;
 
     @Test
-    void shouldCreateProductSuccessfully() {
+    void createProduct_shouldReturn201() {
         Product product = new Product(null, "Laptop", "HP", new BigDecimal("1200"), 10);
+
         when(productService.createProduct(product)).thenReturn(product);
 
         ResponseEntity<Product> response = productController.createProduct(product);
@@ -38,8 +40,9 @@ class ProductControllerTest {
     }
 
     @Test
-    void shouldReturnProductById() {
+    void getProductById_shouldReturn200() {
         Product product = new Product(1L, "Mouse", "Wireless", new BigDecimal("50"), 20);
+
         when(productService.findById(1L)).thenReturn(product);
 
         ResponseEntity<Product> response = productController.getProduct(1L);
@@ -50,7 +53,7 @@ class ProductControllerTest {
     }
 
     @Test
-    void shouldListAllProducts() {
+    void listProducts_shouldReturn200() {
         List<Product> products = List.of(
                 new Product(1L, "Keyboard", "RGB", new BigDecimal("150000"), 5),
                 new Product(2L, "Monitor", "27 inch", new BigDecimal("800000"), 3)
@@ -66,12 +69,14 @@ class ProductControllerTest {
     }
 
     @Test
-    void shouldUpdatePriceSuccessfully() {
+    void updatePrice_shouldReturn200() {
         Product updatedProduct = new Product(1L, "Keyboard", "RGB", new BigDecimal("180000"), 5);
+
         when(productService.updatePrice(1L, new BigDecimal("180000")))
                 .thenReturn(updatedProduct);
 
-        ResponseEntity<Product> response = productController.updatePrice(1L, new BigDecimal("180000"));
+        ResponseEntity<Product> response =
+                productController.updatePrice(1L, new BigDecimal("180000"));
 
         assertEquals(200, response.getStatusCode().value());
         assertEquals(updatedProduct, response.getBody());

@@ -1,10 +1,9 @@
-package co.edu.uniremington.products.service;
+package co.edu.uniremington.products.service.impl;
 
 import co.edu.uniremington.products.exception.InvalidPriceException;
 import co.edu.uniremington.products.exception.ProductNotFoundException;
 import co.edu.uniremington.products.model.Product;
 import co.edu.uniremington.products.repository.ProductRepository;
-import co.edu.uniremington.products.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,14 +42,12 @@ class ProductServiceImplTest {
     @Test
     void createProduct_invalidName_shouldThrowException() {
         Product product = new Product(null, "", "HP", new BigDecimal("1500000"), 5);
-
         assertThrows(IllegalArgumentException.class, () -> productService.createProduct(product));
     }
 
     @Test
     void createProduct_invalidPrice_shouldThrowException() {
         Product product = new Product(null, "Monitor", "LCD", new BigDecimal("-10"), 3);
-
         assertThrows(InvalidPriceException.class, () -> productService.createProduct(product));
     }
 
@@ -69,16 +66,14 @@ class ProductServiceImplTest {
     @Test
     void findById_notFound_shouldThrowException() {
         when(productRepository.findById(99L)).thenReturn(Optional.empty());
-
         assertThrows(ProductNotFoundException.class, () -> productService.findById(99L));
     }
 
     @Test
     void findAll_success() {
         when(productRepository.findAll()).thenReturn(List.of());
-
-        productService.findAll();
-
+        List<Product> result = productService.findAll();
+        assertNotNull(result);
         verify(productRepository).findAll();
     }
 
@@ -99,5 +94,12 @@ class ProductServiceImplTest {
     void updatePrice_invalidPrice_shouldThrowException() {
         assertThrows(InvalidPriceException.class,
                 () -> productService.updatePrice(1L, new BigDecimal("-1")));
+    }
+
+    @Test
+    void updatePrice_notFound_shouldThrowException() {
+        when(productRepository.findById(999L)).thenReturn(Optional.empty());
+        assertThrows(ProductNotFoundException.class,
+                () -> productService.updatePrice(999L, new BigDecimal("50000")));
     }
 }
