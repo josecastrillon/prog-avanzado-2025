@@ -41,7 +41,7 @@ public class ProductController {
     public ResponseEntity<Product> updatePrice(
             @PathVariable Long id,
             @RequestParam BigDecimal price) {
-        Product updatedProduct = productService.updatePrice(id, price);
+        Product updatedProduct = productService. updatePrice(id, price);
         return ResponseEntity.ok(updatedProduct);
     }
 }
