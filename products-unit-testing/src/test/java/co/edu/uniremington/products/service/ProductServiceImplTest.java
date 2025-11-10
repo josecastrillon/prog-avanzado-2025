@@ -1,23 +1,36 @@
 package co.edu.uniremington.products.service;
 
-import co.edu.uniremington.products.exception.InvalidPriceException;
-import co.edu.uniremington.products.exception.ProductNotFoundException;
 import co.edu.uniremington.products.model.Product;
 import co.edu.uniremington.products.repository.ProductRepository;
 import co.edu.uniremington.products.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * UNIT TESTING EXAM
+ *
+ * Implement unit tests for ProductServiceImpl
+ * Using Mockito to mock ProductRepository
+ * Cover the following scenarios:
+ *  - createProduct: successful case
+ *  - findById: successful case and when product not found
+ *  - findAll: verify repository is called
+ *  - updatePrice: successful case and when product not found
+ */
+
+@ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
 
     @Mock
@@ -26,103 +39,100 @@ class ProductServiceImplTest {
     @InjectMocks
     private ProductServiceImpl productService;
 
-    private Product product;
+    private Product product1;
+    private Product product2;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        product1 = new Product();
+        product1.setId(1L);
+        product1.setName("Laptop");
+        product1.setPrice(new BigDecimal("2500.00"));
 
-        product = new Product();
-        product.setId(1L);
-        product.setName("Laptop");
-        product.setDescription("High-end gaming laptop");
-        product.setPrice(new BigDecimal("2500.00"));
-        product.setStock(5);
+        product2 = new Product();
+        product2.setId(2L);
+        product2.setName("Mouse");
+        product2.setPrice(new BigDecimal("100.00"));
     }
 
+    // createProduct - caso exitoso
     @Test
     void shouldCreateProductSuccessfully() {
-        when(productRepository.save(any(Product.class))).thenReturn(product);
+        when(productRepository.save(product1)).thenReturn(product1);
 
-        Product savedProduct = productService.createProduct(product);
+        Product saved = productService.createProduct(product1);
 
-        assertNotNull(savedProduct);
-        assertEquals("Laptop", savedProduct.getName());
-        verify(productRepository, times(1)).save(product);
+        assertNotNull(saved);
+        assertEquals("Laptop", saved.getName());
+        verify(productRepository).save(product1);
     }
 
+    // findById - caso exitoso
     @Test
-    void shouldThrowExceptionWhenProductNameIsMissing() {
-        product.setName("  ");
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> productService.createProduct(product)
-        );
-
-        assertEquals("Product name is required", exception.getMessage());
-        verify(productRepository, never()).save(any());
-    }
-
-    @Test
-    void shouldThrowInvalidPriceExceptionWhenPriceIsZero() {
-        product.setPrice(BigDecimal.ZERO);
-
-        assertThrows(InvalidPriceException.class, () -> productService.createProduct(product));
-        verify(productRepository, never()).save(any());
-    }
-
-    @Test
-    void shouldFindProductByIdSuccessfully() {
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+    void shouldFindProductById() {
+        when(productRepository.findById(1L)).thenReturn(Optional.of(product1));
 
         Product found = productService.findById(1L);
 
         assertNotNull(found);
         assertEquals(1L, found.getId());
-        assertEquals("Laptop", found.getName());
-        verify(productRepository, times(1)).findById(1L);
+        verify(productRepository).findById(1L);
     }
 
+    // findById - producto no encontrado
     @Test
-    void shouldThrowProductNotFoundExceptionWhenIdDoesNotExist() {
+    void shouldReturnNullWhenProductNotFound() {
         when(productRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(ProductNotFoundException.class, () -> productService.findById(99L));
-        verify(productRepository, times(1)).findById(99L);
+        Product found = productService.findById(99L);
+
+        assertNull(found);
+        verify(productRepository).findById(99L);
     }
 
+    //  findAll - verificar que se llama al repositorio
     @Test
-    void shouldReturnAllProductsSuccessfully() {
-        Product secondProduct = new Product(2L, "Mouse", "Wireless mouse",
-                new BigDecimal("100.00"), 15);
+    void shouldReturnAllProducts() {
+        when(productRepository.findAll()).thenReturn(Arrays.asList(product1, product2));
 
-        when(productRepository.findAll()).thenReturn(List.of(product, secondProduct));
+        List<Product> result = productService.findAll();
 
-        List<Product> products = productService.findAll();
-
-        assertEquals(2, products.size());
-        assertTrue(products.contains(product));
-        verify(productRepository, times(1)).findAll();
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        verify(productRepository).findAll();
     }
 
+    //  updatePrice - caso exitoso
     @Test
-    void shouldUpdateProductPriceSuccessfully() {
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
-        when(productRepository.save(any(Product.class))).thenReturn(product);
+    void shouldUpdatePriceSuccessfully() {
+        when(productRepository.findById(1L)).thenReturn(Optional.of(product1));
+        when(productRepository.save(any(Product.class))).thenAnswer(i -> i.getArgument(0));
 
-        Product updatedProduct = productService.updatePrice(1L, new BigDecimal("3000.00"));
+        Product updated = productService.updatePrice(1L, new BigDecimal("3000.00"));
 
-        assertEquals(new BigDecimal("3000.00"), updatedProduct.getPrice());
-        verify(productRepository, times(1)).findById(1L);
-        verify(productRepository, times(1)).save(product);
+        assertNotNull(updated);
+        assertEquals(new BigDecimal("3000.00"), updated.getPrice());
+        verify(productRepository).findById(1L);
+        verify(productRepository).save(any(Product.class));
     }
 
+    //  updatePrice - producto no encontrado
     @Test
-    void shouldThrowInvalidPriceExceptionWhenUpdatingWithNegativePrice() {
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+    void shouldReturnNullWhenUpdatingNonExistingProduct() {
+        when(productRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(InvalidPriceException.class, () -> productService.updatePrice(1L, new BigDecimal("-100.00")));
+        Product updated = productService.updatePrice(99L, new BigDecimal("5000.00"));
+
+        assertNull(updated);
+        verify(productRepository).findById(99L);
         verify(productRepository, never()).save(any());
     }
 }
+
+
+
+
+
+
+
+

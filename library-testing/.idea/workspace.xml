@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="099335e9-1b7a-47d8-88ac-a51d0f5a24fb" name="Changes" comment="" />
+    <list default="true" id="099335e9-1b7a-47d8-88ac-a51d0f5a24fb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../products-unit-testing/src/test/java/co/edu/uniremington/products/service/ProductServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../products-unit-testing/src/test/java/co/edu/uniremington/products/service/ProductServiceImplTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,9 +52,10 @@
     "Spring Boot.LibraryApplication.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "feature/unit__test",
+    "git-widget-placeholder": "feature/examen1-karen",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/karen/Desktop/remington/lenguajes_progr_avanza_2/lenguaje/prog-avanzado-2025/library-testing",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -72,7 +76,7 @@
       <recent name="co.edu.uniremington.library.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.LibraryApplication">
+  <component name="RunManager" selected="JUnit.BookServiceTest">
     <configuration name="BookServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="library-testing" />
       <extension name="coverage">
@@ -105,7 +109,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>

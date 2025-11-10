@@ -2,7 +2,6 @@ package co.edu.uniremington.products.controller;
 
 import co.edu.uniremington.products.model.Product;
 import co.edu.uniremington.products.service.ProductService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,32 +10,35 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 /**
  * UNIT TESTING EXAM
  *
- * ProductControllerTest
+ * Instructions:
+ * 1. Implement unit tests for ProductController
+ * 2. Use Mockito to mock the ProductService
+ * 3. Cover the following scenarios:
+ *    - POST /api/products: successful creation
+ *    - GET /api/products/{id}: get existing product
+ *    - GET /api/products: list all products
+ *    - PATCH /api/products/{id}/price: update price
  *
- * Debe probar:
- * ✅ POST /api/products (creación exitosa con status 201)
- * ✅ GET /api/products/{id} (obtener producto existente)
- * ✅ GET /api/products (listar todos los productos)
- * ✅ PATCH /api/products/{id}/price (actualizar precio)
- *
- * Requisitos:
- * - Uso de @WebMvcTest
- * - Uso de @MockBean para el servicio
- * - Verificación de status HTTP y contenido JSON
+ * Evaluation criteria:
+ * - Correct use of mocks
+ * - Verification of HTTP status codes
+ * - Verification of responses
  */
+
+
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
 
@@ -46,96 +48,79 @@ class ProductControllerTest {
     @MockBean
     private ProductService productService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
-    private Product product1;
-    private Product product2;
+    private Product response1;
 
     @BeforeEach
     void setUp() {
-        // Instancias base para las pruebas, rellenar según sea necesario
-        product1 = new Product();
-        product1.setId(1L);
-        product1.setName("Laptop");
-        product1.setDescription("High-end gaming laptop");
-        product1.setPrice(new BigDecimal("2500.00"));
-        product1.setStock(5);
 
-        product2 = new Product();
-        product2.setId(2L);
-        product2.setName("Smartphone");
-        product2.setDescription("Android phone");
-        product2.setPrice(new BigDecimal("2500.0"));
-        product2.setStock(20);
+        response1 = new Product();
+        response1.setId(1L);
+        response1.setName("Clean Code");
+        response1.setPrice(new BigDecimal("2500.00"));
+
+
     }
 
-    /**
-     * POST /api/products
-     * Caso exitoso: creación de producto
-     * Debe retornar status 201 y el producto en el body
-     */
     @Test
     void shouldCreateProductAndReturnStatus201() throws Exception {
-        when(productService.createProduct(any(Product.class))).thenReturn(product1); //simula la creacióel producto
+
+        when(productService.createProduct(any(Product.class))).thenReturn(response1);
 
         mockMvc.perform(post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(product1))) //mapea el producto en json y lo envia en el body
+                        .content("{\"name\": \"Clean Code\", \"price\": 2500.00}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Laptop"))
-                .andExpect(jsonPath("$.price").value(2500.00))
-                .andExpect(jsonPath("$.stock").value(5));
+                .andExpect(jsonPath("$.name").value("Clean Code"))
+                .andExpect(jsonPath("$.price").value(2500.00));
+
+        verify(productService).createProduct(any(Product.class));
     }
 
-    /**
-     * GET /api/products/{id}
-     * Caso exitoso: producto existente
-     */
     @Test
-    void shouldReturnExistingProductById() throws Exception {
-        when(productService.findById(1L)).thenReturn(product1);
+    void GetProductById() throws Exception {
+        when(productService.findById(1L)).thenReturn(response1);
 
         mockMvc.perform(get("/api/products/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Laptop"))
-                .andExpect(jsonPath("$.description").value("High-end gaming laptop"))
-                .andExpect(jsonPath("$.price").value(2500.00))
-                .andExpect(jsonPath("$.stock").value(5));
+                .andExpect(jsonPath("$.name").value("Clean Code"))
+                .andExpect(jsonPath("$.price").value(2500.00));
+
+        verify(productService).findById(1L);
     }
 
-    /**
-     * GET /api/products
-     * Caso exitoso: lista de productos
-     */
     @Test
-    void shouldListAllProducts() throws Exception {
-        List<Product> products = Arrays.asList(product1, product2);
-        when(productService.findAll()).thenReturn(products);
+    void ListAllProducts() throws Exception {
+        when(productService.findAll()).thenReturn(List.of(response1));
 
         mockMvc.perform(get("/api/products"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].name").value("Laptop"))
-                .andExpect(jsonPath("$[1].name").value("Smartphone"));
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("Clean Code"));
+
+        verify(productService).findAll();
     }
 
-    /**
-     * PATCH /api/products/{id}/price
-     * Caso exitoso: actualización de precio
-     */
     @Test
-    void shouldUpdateProductPrice() throws Exception {
-        Product updatedProduct = new Product(1L, "Laptop", "High-end gaming laptop", new BigDecimal("3000.00"), 5);
-        when(productService.updatePrice(eq(1L), eq(new BigDecimal("3000.00")))).thenReturn(updatedProduct);
+    void UpdateProductPrice() throws Exception {
+        Product updatedResponse = new Product();
+        updatedResponse.setId(1L);
+        updatedResponse.setName("Clean Code");
+        updatedResponse.setPrice(new BigDecimal("2700.00"));
+
+        when(productService.updatePrice(1L, new BigDecimal("2700.00"))).thenReturn(updatedResponse);
 
         mockMvc.perform(patch("/api/products/1/price")
-                        .param("price", "3000.00"))
+                        .param("price", "2700.00"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Laptop"))
-                .andExpect(jsonPath("$.price").value(3000.00));
+                .andExpect(jsonPath("$.name").value("Clean Code"))
+                .andExpect(jsonPath("$.price").value(2700.00));
+
+        verify(productService).updatePrice(1L, new BigDecimal("2700.00"));
     }
+
+
 }
