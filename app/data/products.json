@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nombre": "Base líquida HD",
+    "marca": "Maybelline",
+    "precio": 45000,
+    "stock": 20
+  },
+  {
+    "id": 2,
+    "nombre": "Labial mate rojo intenso",
+    "marca": "L'Oréal",
+    "precio": 25000,
+    "stock": 15
+  },
+  {
+    "id": 3,
+    "nombre": "Sombras nude 12 tonos",
+    "marca": "Urban Decay",
+    "precio": 70000,
+    "stock": 10
+  },
+  {
+    "id": 4,
+    "nombre": "Rubor coral",
+    "marca": "Natura",
+    "precio": 28000,
+    "stock": 25
+  }
+]

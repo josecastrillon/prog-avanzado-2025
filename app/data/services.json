@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nombre": "Maquillaje de noche",
+    "descripcion": "Servicio profesional para eventos y fiestas nocturnas.",
+    "precio": 60000,
+    "duracion_minutos": 60
+  },
+  {
+    "id": 2,
+    "nombre": "Maquillaje de novia",
+    "descripcion": "Preparación completa para el día de la boda con productos premium.",
+    "precio": 120000,
+    "duracion_minutos": 90
+  },
+  {
+    "id": 3,
+    "nombre": "Cuidado facial profundo",
+    "descripcion": "Limpieza e hidratación profunda de la piel antes del maquillaje.",
+    "precio": 80000,
+    "duracion_minutos": 45
+  },
+  {
+    "id": 4,
+    "nombre": "Maquillaje natural de día",
+    "descripcion": "Look ligero y fresco para el día a día o eventos casuales.",
+    "precio": 50000,
+    "duracion_minutos": 40
+  },
+  {
+    "id": 5,
+    "nombre": "Asesoría personalizada de tonos",
+    "descripcion": "Evaluación de tono de piel y recomendación de productos adecuados.",
+    "precio": 40000,
+    "duracion_minutos": 30
+  }
+]

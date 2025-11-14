@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nombre": "María Fernanda Bueno",
+    "correo": "mafe.bueno@example.com",
+    "telefono": "3104567890",
+    "direccion": "Cra 45 #22-17, Medellín"
+  },
+  {
+    "id": 2,
+    "nombre": "Laura Gómez",
+    "correo": "laura.gomez@example.com",
+    "telefono": "3017894561",
+    "direccion": "Calle 10 #12-30, Bogotá"
+  },
+  {
+    "id": 3,
+    "nombre": "Sofía Ramírez",
+    "correo": "sofia.ramirez@example.com",
+    "telefono": "3206541237",
+    "direccion": "Av. Santander #35-60, Cali"
+  },
+  {
+    "id": 4,
+    "nombre": "Camila Torres",
+    "correo": "camila.torres@example.com",
+    "telefono": "3128749630",
+    "direccion": "Carrera 7 #45-80, Bucaramanga"
+  },
+  {
+    "id": 5,
+    "nombre": "Valentina López",
+    "correo": "valentina.lopez@example.com",
+    "telefono": "3197458201",
+    "direccion": "Calle 50 #18-22, Barranquilla"
+  }
+]
