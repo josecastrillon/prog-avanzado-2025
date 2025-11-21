@@ -7,15 +7,13 @@ spring:
   cloud:
     gateway:
       routes:
-        # --- RUTA 1: VEHÍCULOS ---
         - id: vehicle-route
-          uri: lb://vehiccle-service
+          uri: lb://vehicle-service
           predicates:
             - Path=/api/vehicles/**
 
-        # --- RUTA 2: REPARACIONES ---
         - id: repair-route
-          uri: http://repair-service
+          uri: lb://repair-service
           predicates:
             - Path=/api/repairs/**
 
